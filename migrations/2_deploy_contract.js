@@ -3,7 +3,7 @@ const fs = require("fs");
 const NFT = artifacts.require('NFT');
 const NFTMarket = artifacts.require('NFTMarket');
 
-module.exports = () => (deployer, network, accounts) {
+module.exports = async function (deployer, network, accounts) {
     // step1 deploy nftMarket contract
     await deployer.deploy(NFTMarket);
     const nftMarket = await NFTMarket.deployed();

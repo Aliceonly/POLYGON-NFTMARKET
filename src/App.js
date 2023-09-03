@@ -1,12 +1,15 @@
 import {Web3ReactProvider} from '@web3-react/core';
 import {Web3Provider} from '@ethersproject/providers';
 
-import Header from './components/Header';
-import Footer from './components/Footer';
+import StickyLayout from './components/Headers';
+import Content from './components/Contents';
+import Footer from "./components/Footer";
+import {Tab} from "semantic-ui-react";
 
-import Content from './components/Containers';
-import {Container, Image} from 'semantic-ui-react';
-import iconDevx from "./assets/icon-devx.svg"
+import NFTDAppIndex from "./components/NFTMarket"
+import Home from "./components/NFTMarket/home";
+import MyAssets from "./components/NFTMarket/assets"
+import CreatorDashboard from "./components/NFTMarket/creator-dashboard"
 
 import './App.css';
 
@@ -16,17 +19,21 @@ const getLibrary = (provider) => {
   return library;
 };
 
+const panes = [
+  {menuItem: 'Home', render: () => <Tab.Pane><Home/></Tab.Pane>},
+  {menuItem: 'Creator Dashboard', render: () => <Tab.Pane><CreatorDashboard/></Tab.Pane>},
+  {menuItem: 'Digital Assets', render: () => <Tab.Pane><MyAssets/></Tab.Pane>},
+];
+
 function App() {
   return (
   <Web3ReactProvider getLibrary={getLibrary}>
     <div className="App">
-      <Header/>
+      <StickyLayout/>
       <Content>
-        <Container text textAlign='center'>
-          <Image centered size='tiny' src={iconDevx} style={{marginBottom:"2em"}}/>
-          <p>Create React Ethereum DApp on Polygon</p>
-          <p>Build your first app with Starter Kits</p>
-        </Container>
+        <NFTDAppIndex/>
+        <Tab menu={{fluid: true, vertical: true, tabular: true}} grid={{paneWidth: 14, tabWidth: 2}}
+             renderActiveOnly={true} panes={panes}/>
       </Content>
       <Footer/>
     </div>
